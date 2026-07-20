@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Shopping List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="bg-decoration" aria-hidden="true"></div>
+
+<header>
+  <div class="header-icon">🛍️</div>
+  <h1>Shopping <span class="h1-accent">List</span></h1>
+  <p>Keep track of everything, together</p>
+  <div class="status">
+    <span class="status-dot" id="conn-dot"></span>
+    <span id="conn-label">Connecting…</span>
+  </div>
+</header>
+
+<div class="budget-card" id="budget-card">
+  <div class="budget-top">
+    <div>
+      <div class="budget-label">Total Spending</div>
+      <div class="budget-spent" id="budget-spent">$0.00</div>
+    </div>
+    <div class="budget-right">
+      <div class="budget-label">Budget</div>
+      <div class="budget-limit-row">
+        <span id="budget-amount">—</span>
+        <button class="budget-edit-btn" id="budget-edit-btn" title="Edit budget">
+          <!-- Lucide: pencil -->
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+            <path d="m15 5 4 4"/>
+          </svg>
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="budget-bar-track">
+    <div class="budget-bar-fill" id="budget-bar-fill"></div>
+  </div>
+  <div class="budget-footer" id="budget-footer"></div>
+</div>
+
+<!-- Booking Info -->
+<div id="booking-section" class="booking-section"></div>
+
+<!-- Baggage Tracker -->
+<div id="baggage-section" class="baggage-section"></div>
+
+<!-- Flight Countdown -->
+<div id="flight-section" class="flight-section"></div>
+
+<div class="tabs" role="tablist">
+  <button class="tab active" data-family="a" id="tab-a" role="tab">
+    <div class="tab-left">
+      <div class="tab-icon-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <span id="tab-name-a">My Family</span>
+    </div>
+    <span class="count" id="count-a">0</span>
+  </button>
+  <button class="tab" data-family="b" id="tab-b" role="tab">
+    <div class="tab-left">
+      <div class="tab-icon-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <span id="tab-name-b">Her Family</span>
+    </div>
+    <span class="count" id="count-b">0</span>
+  </button>
+  <button class="tab tab-dash" data-family="dash" id="tab-dash" role="tab">
+    <div class="tab-left">
+      <div class="tab-icon-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6"  y1="20" x2="6"  y2="14"/>
+        </svg>
+      </div>
+      <span>Stats</span>
+    </div>
+  </button>
+</div>
+
+<div class="panel active" id="panel-a">
+  <div class="sf-area">
+    <div class="sf-row">
+      <div class="sf-search-wrap">
+        <!-- Lucide: search -->
+        <svg class="sf-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input class="sf-search" id="search-a" type="search" placeholder="Search items…" />
+      </div>
+      <button class="sf-toggle" id="sf-toggle-a">
+        <!-- Lucide: sliders-horizontal -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/>
+          <line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/>
+          <circle cx="17" cy="4" r="3"/><circle cx="10" cy="12" r="3"/><circle cx="14" cy="20" r="3"/>
+        </svg>
+        Filters
+      </button>
+    </div>
+    <div class="sf-panel" id="sf-panel-a"></div>
+  </div>
+  <div id="sections-a"></div>
+  <button class="add-person-btn" id="add-person-a">
+    <!-- Lucide: user-plus -->
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <line x1="19" y1="8" x2="19" y2="14"/>
+      <line x1="22" y1="11" x2="16" y2="11"/>
+    </svg>
+    Add person
+  </button>
+</div>
+
+<div class="panel" id="panel-b">
+  <div class="sf-area">
+    <div class="sf-row">
+      <div class="sf-search-wrap">
+        <svg class="sf-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input class="sf-search" id="search-b" type="search" placeholder="Search items…" />
+      </div>
+      <button class="sf-toggle" id="sf-toggle-b">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/>
+          <line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/>
+          <circle cx="17" cy="4" r="3"/><circle cx="10" cy="12" r="3"/><circle cx="14" cy="20" r="3"/>
+        </svg>
+        Filters
+      </button>
+    </div>
+    <div class="sf-panel" id="sf-panel-b"></div>
+  </div>
+  <div id="sections-b"></div>
+  <button class="add-person-btn" id="add-person-b">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <line x1="19" y1="8" x2="19" y2="14"/>
+      <line x1="22" y1="11" x2="16" y2="11"/>
+    </svg>
+    Add person
+  </button>
+</div>
+
+<div class="panel" id="panel-dash">
+  <div class="dash-inner" id="dash-content">
+    <div class="dash-loading">
+      <div class="dash-loading-icon">📊</div>
+      <p>Loading dashboard…</p>
+    </div>
+  </div>
+</div>
+
+<p class="footer-info">✦ &nbsp; Synced in real time via Firebase &nbsp; ✦</p>
+
+<!-- Add Item Modal (kept for potential future use) -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">
+        <div class="modal-bar" id="modal-bar"></div>
+        <span id="modal-person-name">Add item</span>
+      </div>
+      <button class="modal-close" id="modal-close">
+        <!-- Lucide: x -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <label class="field-label">Category</label>
+      <div class="cat-picker" id="modal-cat-picker"></div>
+      <label class="field-label">Item name</label>
+      <input class="field-input" id="modal-name" placeholder="e.g. White sneakers" maxlength="100" />
+      <label class="field-label">Price <span class="field-required">*</span></label>
+      <input class="field-input field-price" id="modal-price" placeholder="e.g. 49.99" maxlength="20" />
+      <label class="field-label">Product Link <span class="field-optional">(optional)</span></label>
+      <input class="field-input" id="modal-link" type="url" placeholder="Paste product URL…" />
+      <label class="field-label">Notes <span class="field-optional">(optional)</span></label>
+      <textarea class="field-input field-notes" id="modal-notes" placeholder="Size, color, store…" rows="2"></textarea>
+      <label class="field-label">Image <span class="field-optional">(optional)</span></label>
+      <div class="img-row">
+        <input class="field-input img-url-input" id="modal-url" placeholder="Paste image URL…" />
+        <label class="upload-btn" title="Upload from device">
+          <!-- Lucide: upload -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Upload
+          <input type="file" id="modal-file" accept="image/*" />
+        </label>
+      </div>
+      <div class="img-preview" id="modal-preview">
+        <img id="modal-preview-img" alt="preview" />
+        <button class="remove-img-btn" id="modal-remove-img">✕ Remove</button>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" id="modal-cancel">Cancel</button>
+      <button class="btn-submit" id="modal-submit">Add Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- Flight Modal -->
+<div class="modal-overlay" id="flight-modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">
+        <span style="font-size:1.1rem">✈️</span>
+        <span id="flight-modal-title">Add Flight</span>
+      </div>
+      <button class="modal-close" id="flight-modal-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <label class="field-label">Destination <span class="field-required">*</span></label>
+      <input class="field-input" id="flight-dest" placeholder="e.g. Paris, France" maxlength="80" />
+      <div class="flight-date-row">
+        <div>
+          <label class="field-label">Date <span class="field-required">*</span></label>
+          <input class="field-input" id="flight-date" type="date" />
+        </div>
+        <div>
+          <label class="field-label">Time <span class="field-required">*</span></label>
+          <input class="field-input" id="flight-time" type="time" />
+        </div>
+      </div>
+      <label class="field-label">Flight Number <span class="field-optional">(optional)</span></label>
+      <input class="field-input" id="flight-no" placeholder="e.g. AF 123" maxlength="20" />
+      <label class="field-label">Notes <span class="field-optional">(optional)</span></label>
+      <input class="field-input" id="flight-notes" placeholder="Airport, gate, terminal…" maxlength="100" />
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" id="flight-modal-cancel">Cancel</button>
+      <button class="btn-submit flight-submit" id="flight-modal-submit">Save Flight</button>
+    </div>
+  </div>
+</div>
+
+<!-- Baggage Modal -->
+<div class="modal-overlay" id="baggage-modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title">
+        <span style="font-size:1.1rem">🧳</span>
+        <span id="baggage-modal-title">Add Baggage Item</span>
+      </div>
+      <button class="modal-close" id="baggage-modal-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <label class="field-label">Bag Type <span class="field-required">*</span></label>
+      <div class="bag-type-row" id="bag-type-row">
+        <button class="bag-type-btn active" data-bagtype="checked">
+          <span class="bag-type-emoji">🧳</span>
+          <span class="bag-type-label">Checked</span>
+          <span class="bag-type-sub">23kg each</span>
+        </button>
+        <button class="bag-type-btn" data-bagtype="carry">
+          <span class="bag-type-emoji">🎒</span>
+          <span class="bag-type-label">Carry-on</span>
+          <span class="bag-type-sub">7kg max</span>
+        </button>
+        <button class="bag-type-btn" data-bagtype="extra">
+          <span class="bag-type-emoji">📦</span>
+          <span class="bag-type-label">Extra</span>
+          <span class="bag-type-sub">280 CAD</span>
+        </button>
+      </div>
+      <label class="field-label">Item Description <span class="field-required">*</span></label>
+      <input class="field-input" id="bag-item-name" placeholder="e.g. Clothes, Shoes, Gifts…" maxlength="80" />
+      <label class="field-label">Weight (kg) <span class="field-required">*</span></label>
+      <input class="field-input" id="bag-weight" type="number" min="0.1" max="32" step="0.1" placeholder="e.g. 5.5" />
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" id="baggage-modal-cancel">Cancel</button>
+      <button class="btn-submit" id="baggage-modal-submit">Add Item</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
